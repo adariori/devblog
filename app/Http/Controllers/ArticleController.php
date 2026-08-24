@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
     //
-public function index()
-{
-    $titre = 'Tous les articles de DevBlog';
+    public function index()
+    {
+        $articles = Article::all();
 
-    $articles = [
-        ['titre' => 'Débuter avec Laravel', 'auteur' => 'Alex'],
-        ['titre' => 'Comprendre les routes', 'auteur' => 'Sam'],
-        ['titre' => 'Blade pour les nuls', 'auteur' => 'Alex'],
-    ];
+        return view('articles.index', compact('articles'));
+    }
 
-    return view('articles.index', compact('titre', 'articles'));
-}
+    public function show($id)
+    {
+        $article = Article::findOrFail($id);
 
-    
+        return view('articles.show', compact('article'));
+    }
 }

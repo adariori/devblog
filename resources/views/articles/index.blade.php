@@ -1,9 +1,11 @@
 <x-layout titre="Tous les articles de DevBlog">
-    <h1>{{ $titre }}</h1>
+
+    <h1>Tous les articles</h1>
+
 
     <ul>
         @forelse ($articles as $article)
-            <li><strong>{{ $article['titre'] }}</strong> - par {{ $article['auteur'] }}</li>
+            <li><a href="/articles/{{ $article->id }}"><strong>{{ $article->titre }}</strong></a> - par {{ $article->auteur }}</li>
         @empty
             <li>Aucun article pour le moment</li>
         @endforelse

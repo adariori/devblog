@@ -6,6 +6,8 @@ use App\Http\Controllers\AuteurController;
 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+
 Route::get('/auteurs', [AuteurController::class, 'index'])->name('auteurs.index');
 
 Route::get('/auteurs/{id}', [AuteurController::class, 'show'])->name('auteurs.show');
