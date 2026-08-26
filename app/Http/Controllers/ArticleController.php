@@ -19,7 +19,6 @@ class ArticleController extends Controller
         $donneesValides = $request->validate([
             'titre'  => 'required|min:3|max:255',
             'contenu'  => 'required',
-            'auteur'  => 'nullable|max:100',
         ]);
 
         Article::create($donneesValides);
@@ -52,7 +51,6 @@ class ArticleController extends Controller
         $donneesValidees = $request->validate([
             'titre' => 'required|min:3|max:255',
             'contenu' =>  'required',
-            'auteur' =>  'nullable|max:100',
         ]);
 
         $article = Article::findOrFail(($id));

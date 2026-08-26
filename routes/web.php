@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuteurController;
-
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 
 // Le formulaire de création (GET)
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
@@ -27,6 +28,11 @@ Route::get('/auteurs', [AuteurController::class, 'index'])->name('auteurs.index'
 
 Route::get('/auteurs/{id}', [AuteurController::class, 'show'])->name('auteurs.show');
 
+//Category
+Route::resource('categories', CategoryController::class)->except(['show']);
+
+//Commentaires 
+Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 
 

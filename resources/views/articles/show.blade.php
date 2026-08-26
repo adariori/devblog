@@ -3,10 +3,32 @@
     <h1>{{ $article->titre }}</h1>
 
     @if ($article->auteur)
-        <p><em>Écrit par {{ $article->auteur }}</em></p>
+        <p><em>Écrit par {{ $article->auteur->name }}</em></p>
     @endif
 
     <p>{{ $article->contenu }}</p>
+
+    <h3>Commentaires</h3>
+
+    @forelse ($article->comments as $comment)
+        <div style="border: 1px solid #ccc; padding: 8px; margin: 8px 0;">
+            <p>{{ $comment->contenu }}</p>
+            <small>— {{ $comment->auteur }}</small>
+        </div>
+    @empty
+        <p>Aucun commentaire pour l'instant. Soyez le premier !</p>
+    @endforelse
+
+    <h4>Laisser un commentaire</h4>
+    
+    <form action="{{ route('comments.store', $article->id) }}" method="POST">
+        @csrf
+        <p><input type="text" name="auteur" placeholder="Votre nom"></p>
+        <p>
+            <textarea name="contenu" placeholder="Votre commentaire"></textarea>
+        </p>
+        <button type="submit">Envoyer</button>
+    </form>
 
     <a href="{{ route('articles.edit', $article->id) }}">✏️ Modifier cet article</a>
 

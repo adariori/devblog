@@ -21,15 +21,9 @@
             @enderror
         </p>
 
-        <p>
-            <label>Auteur :</label>
-            <input type="text" name="auteur" value="{{ old('auteur') }}">
-            @error('auteur')
-                <span style="color: red;">{{ $message }}</span>
-            @enderror
-        </p>
-
         <button type="submit">Publier</button>
     </form>
+
+
 
 </x-layout>

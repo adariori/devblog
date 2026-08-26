@@ -5,7 +5,7 @@
     <ul>
         @forelse ($articles as $article)
             <li><a href="/articles/{{ $article->id }}"><strong>{{ $article->titre }}</strong></a> - par
-                {{ $article->auteur }}</li>
+                {{ $article->auteur->name ?? 'Inconnu' }}</li>
         @empty
             <li>Aucun article pour le moment</li>
         @endforelse

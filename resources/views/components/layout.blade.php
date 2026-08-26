@@ -11,6 +11,7 @@
         <h2>📝 DevBlog</h2>
         <nav>
             <a href="/articles">Articles</a> |
+            <a href="/categories">Categories</a> |
             <a href="/contact">Contact</a> |
             <a href="/a-propos">À propos</a>
         </nav>

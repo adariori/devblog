@@ -22,11 +22,6 @@
             @enderror
         </p>
 
-        <p>
-            <label>Auteur :</label><br>
-            <input type="text" name="auteur" value="{{ old('auteur', $article->auteur) }}">
-        </p>
-
         <button type="submit">Enregistrer les modifications</button>
     </form>
 
