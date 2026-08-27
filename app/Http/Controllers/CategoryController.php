@@ -21,7 +21,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|min:2|max:50|unique:categories,name',
+            'nom' => 'required|min:2|max:50|unique:categories,nom',
         ]);
         Category::create($data);
         return redirect()->route('categories.index');
@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'name' => 'required|min:2|max:50',
+            'nom' => 'required|min:2|max:50',
         ]);
         $category = Category::findOrFail($id);
         $category->update($data);

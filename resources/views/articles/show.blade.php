@@ -2,11 +2,20 @@
 
     <h1>{{ $article->titre }}</h1>
 
-    @if ($article->auteur)
-        <p><em>Écrit par {{ $article->auteur->name }}</em></p>
+    @if ($article->user)
+        <p><em>Écrit par {{ $article->user->name }}</em></p>
     @endif
 
     <p>{{ $article->contenu }}</p>
+
+    @if ($article->categories->isNotEmpty())
+        <p>
+            Catégories :
+            @foreach ($article->categories as $categorie)
+                <strong>{{ $categorie->nom }}</strong>@if (!$loop->last), @endif
+            @endforeach
+        </p>
+    @endif
 
     <h3>Commentaires</h3>
 
@@ -20,7 +29,7 @@
     @endforelse
 
     <h4>Laisser un commentaire</h4>
-    
+
     <form action="{{ route('comments.store', $article->id) }}" method="POST">
         @csrf
         <p><input type="text" name="auteur" placeholder="Votre nom"></p>
@@ -37,7 +46,8 @@
     <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
         @csrf
         @method('DELETE')
-        <button type="submit" onclick="return confirm('Voulez vous vraiment supprimer cet artcile ?')">Supprimer cet
+        <button type="submit" onclick="return confirm('Voulez vous vraiment supprimer cet article ?')">Supprimer
+            cet
             article</button>
     </form>
 

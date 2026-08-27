@@ -7,8 +7,8 @@
 
         <p>
             <label>Nom :</label>
-            <input type="text" name="name" value="{{ old('name') }}">
-            @error('name')
+            <input type="text" name="nom" value="{{ old('nom') }}">
+            @error('nom')
                 <span style="color: red;">{{ $message }}</span>
             @enderror
         </p>

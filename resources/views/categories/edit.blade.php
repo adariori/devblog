@@ -7,8 +7,8 @@
         @method('PUT')
         <p>
             <label>Nom :</label><br>
-            <input type="text" name="name" value="{{ old('name', $category->name) }}">
-            @error('name')
+            <input type="text" name="nom" value="{{ old('nom', $category->name) }}">
+            @error('nom')
                 <span style="color:red">{{ $message }}</span>
             @enderror
         </p>

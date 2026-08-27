@@ -6,7 +6,7 @@
 
     <ul>
         @forelse ($categories as $category)
-            <li><a href="{{ route('categories.edit', $category->id) }}"><strong>{{ $category->name }}</strong></a></li>
+            <li><a href="{{ route('categories.edit', $category->id) }}"><strong>{{ $category->nom }}</strong></a></li>
         @empty
             <li>Aucune categorie pour le moment</li>
         @endforelse
