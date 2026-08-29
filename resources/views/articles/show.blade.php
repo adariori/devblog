@@ -12,7 +12,21 @@
         <p>
             Catégories :
             @foreach ($article->categories as $categorie)
-                <strong>{{ $categorie->nom }}</strong>@if (!$loop->last), @endif
+                <strong>{{ $categorie->nom }}</strong>
+                @if (!$loop->last)
+                    ,
+                @endif
+            @endforeach
+        </p>
+    @endif
+
+    @if ($article->tags->isNotEmpty())
+        <p>
+            Tags :
+            @foreach ($article->tags as $tag)
+                #{{ $tag->nom }}@if (!$loop->last)
+                    ,
+                @endif
             @endforeach
         </p>
     @endif
