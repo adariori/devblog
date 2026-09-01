@@ -6,6 +6,7 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -18,7 +19,7 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
-        Article::create($request->validated());
+        $request->user()->articles()->create($request->validated());
 
         return redirect()->route('articles.index');
     }
@@ -37,24 +38,28 @@ class ArticleController extends Controller
         return view('articles.show', compact('article'));
     }
 
-    public function edit($id)
-    {
-        $article = Article::findOrFail($id);
+public function edit($id)
+{
+    $article = Article::findOrFail($id);
+    Gate::authorize('update', $article); // 🚫 403 si ce n'est pas son article
 
-        return view('articles.edit', compact('article'));
-    }
+    return view('articles.edit', compact('article'));
+}
 
-    public function update(UpdateArticleRequest $request, $id) {
-        $article = Article::findOrFail(($id));
-        $article->update($request->validated());
+public function update(UpdateArticleRequest $request, $id)
+{
+    $article = Article::findOrFail($id);
+    Gate::authorize('update', $article);
 
-        return redirect()->route('articles.show', $article->id);
-    }
+    $article->update($request->validated());
+    return redirect()->route('articles.show', $article->id);
+}
 
     public function destroy($id) {
-        $article = Article::findOrFail($id);
-        $article->delete();
+    $article = Article::findOrFail($id);
+    Gate::authorize('delete', $article);
 
-        return redirect()->route('articles.index');
+    $article->delete();
+    return redirect()->route('articles.index');
     }
 }

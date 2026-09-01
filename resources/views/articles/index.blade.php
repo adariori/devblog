@@ -11,6 +11,8 @@
         @endforelse
     </ul>
 
+@auth
     <a href="{{ route('articles.create') }}">+ Écrire un nouvel article</a>
+@endauth
 
 </x-layout>

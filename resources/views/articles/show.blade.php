@@ -52,18 +52,16 @@
         </p>
         <button type="submit">Envoyer</button>
     </form>
-
-    <a href="{{ route('articles.edit', $article->id) }}">✏️ Modifier cet article</a>
-
-    <br>
+    
+@can('update', $article)
+    <a href="{{ route('articles.edit', $article->id) }}">✏️ Modifier</a>
 
     <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
         @csrf
         @method('DELETE')
-        <button type="submit" onclick="return confirm('Voulez vous vraiment supprimer cet article ?')">Supprimer
-            cet
-            article</button>
+        <button onclick="return confirm('Supprimer cet article ?')">🗑️ Supprimer</button>
     </form>
+@endcan
 
     <a href="/articles">← Retour à la liste</a>
 
