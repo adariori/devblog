@@ -53,3 +53,8 @@ Route::post('/articles/{article}/comments', [CommentController::class, 'store'])
 
 Route::get('/admin/tableau-de-bord', [AdminController::class, 'index'])
     ->middleware('admin');
+
+
+Route::delete('/comments/{id}', [CommentController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('comments.destroy');

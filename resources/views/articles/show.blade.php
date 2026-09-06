@@ -37,6 +37,14 @@
         <div style="border: 1px solid #ccc; padding: 8px; margin: 8px 0;">
             <p>{{ $comment->contenu }}</p>
             <small>— {{ $comment->auteur }}</small>
+
+            @can('delete', $comment)
+                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="return confirm('Supprimer ce commentaire ?')">🗑️ Supprimer</button>
+                </form>
+            @endcan
         </div>
     @empty
         <p>Aucun commentaire pour l'instant. Soyez le premier !</p>
@@ -52,16 +60,16 @@
         </p>
         <button type="submit">Envoyer</button>
     </form>
-    
-@can('update', $article)
-    <a href="{{ route('articles.edit', $article->id) }}">✏️ Modifier</a>
 
-    <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button onclick="return confirm('Supprimer cet article ?')">🗑️ Supprimer</button>
-    </form>
-@endcan
+    @can('update', $article)
+        <a href="{{ route('articles.edit', $article->id) }}">✏️ Modifier</a>
+
+        <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button onclick="return confirm('Supprimer cet article ?')">🗑️ Supprimer</button>
+        </form>
+    @endcan
 
     <a href="/articles">← Retour à la liste</a>
 
