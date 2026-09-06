@@ -2,6 +2,10 @@
 
     <h1>{{ $article->titre }}</h1>
 
+    @if ($article->cover_path)
+        <img src="{{ Storage::url($article->cover_path) }}" alt="Couverture" style="max-width: 100%;">
+    @endif
+
     @if ($article->user)
         <p><em>Écrit par {{ $article->user->name }}</em></p>
     @endif
@@ -55,9 +59,11 @@
     <form action="{{ route('comments.store', $article->id) }}" method="POST">
         @csrf
         <p><input type="text" name="auteur" placeholder="Votre nom"></p>
+
         <p>
             <textarea name="contenu" placeholder="Votre commentaire"></textarea>
         </p>
+
         <button type="submit">Envoyer</button>
     </form>
 

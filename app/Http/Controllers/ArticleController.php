@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -19,7 +20,16 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
-        $request->user()->articles()->create($request->validated());
+
+        $data = $request->validated();
+
+        if ($request->hasFile('cover')) {
+            $data['cover_path'] = $request->file('cover')->store('covers', 'public');
+        }
+
+        unset($data['cover']);
+
+        $request->user()->articles()->create($data);
 
         return redirect()->route('articles.index');
     }
@@ -38,28 +48,47 @@ class ArticleController extends Controller
         return view('articles.show', compact('article'));
     }
 
-public function edit($id)
-{
-    $article = Article::findOrFail($id);
-    Gate::authorize('update', $article); // 🚫 403 si ce n'est pas son article
+    public function edit($id)
+    {
+        $article = Article::findOrFail($id);
+        Gate::authorize('update', $article); // 🚫 403 si ce n'est pas son article
 
-    return view('articles.edit', compact('article'));
-}
+        return view('articles.edit', compact('article'));
+    }
 
-public function update(UpdateArticleRequest $request, $id)
-{
-    $article = Article::findOrFail($id);
-    Gate::authorize('update', $article);
+    public function update(UpdateArticleRequest $request, $id)
+    {
+        $article = Article::findOrFail($id);
+        Gate::authorize('update', $article); // sécurité du Module 9 !
 
-    $article->update($request->validated());
-    return redirect()->route('articles.show', $article->id);
-}
+        $data = $request->validated();
 
-    public function destroy($id) {
-    $article = Article::findOrFail($id);
-    Gate::authorize('delete', $article);
+        if ($request->hasFile('cover')) {
+            // 1. Supprimer l'ancienne image si elle existe
+            if ($article->cover_path) {
+                Storage::disk('public')->delete($article->cover_path);
+            }
+            // 2. Stocker la nouvelle
+            $data['cover_path'] = $request->file('cover')->store('covers', 'public');
+        }
 
-    $article->delete();
-    return redirect()->route('articles.index');
+        unset($data['cover']);
+        $article->update($data);
+
+        return redirect()->route('articles.show', $article->id);
+    }
+
+    public function destroy($id)
+    {
+        $article = Article::findOrFail($id);
+        Gate::authorize('delete', $article);
+
+        if ($article->cover_path) {
+            Storage::disk('public')->delete($article->cover_path);
+        }
+
+        $article->delete();
+
+        return redirect()->route('articles.index');
     }
 }

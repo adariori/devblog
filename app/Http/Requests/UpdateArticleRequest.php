@@ -18,6 +18,7 @@ class UpdateArticleRequest extends FormRequest
         return [
             'titre' => 'required|min:3|max:255',
             'contenu' => 'required',
+            'cover' => 'nullable|image|max:2048',
         ];
     }
 }
