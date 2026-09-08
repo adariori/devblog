@@ -8,6 +8,7 @@ use App\Http\Controllers\AuteurController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
