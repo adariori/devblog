@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\CommentController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,12 +30,15 @@ Route::post('/login', function (Request $request) {
 // Public : lecture
 Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/articles/{id}', [ArticleController::class, 'show']);
+Route::get('/articles/{article}/comments', [CommentController::class, 'index']);
 
 // Réservé aux porteurs d'un jeton valide
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/articles', [ArticleController::class, 'store']);
     Route::put('/articles/{id}', [ArticleController::class, 'update']);
     Route::delete('/articles/{id}', [ArticleController::class, 'destroy']);
+
+    Route::post('/articles/{article}/comments', [CommentController::class, 'store']);
 
     // Déconnexion : on détruit le jeton courant (désactive le badge)
     Route::post('/logout', function (Request $request) {
