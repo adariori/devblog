@@ -1,5 +1,23 @@
 <?php
 
+/**
+ * @author    ARIORI OLOROUNKO Adéliyi Odjouola Moshood
+ * @github    https://github.com/adariori
+ * @web       https://portefolio-nine-iota.vercel.app/
+ * @contact   adariori3@gmail.com
+ * @location  Cotonou, Benin
+ *
+ * @project   DevBlog
+ * @version   1.0.0
+ * @year      2026
+ * @stack     Laravel 13 · PHP 8.4 · PostgreSQL · Docker · CI/CD GitHub Actions
+ *
+ * @license   Creative Commons BY-NC-ND 4.0
+ *            © 2026 ARIORI OLOROUNKO Adéliyi Odjouola Moshood
+ *            Consultation autorisée à titre de référence uniquement.
+ *            Toute réutilisation commerciale ou modification est interdite.
+ */
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
