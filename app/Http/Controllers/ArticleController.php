@@ -8,7 +8,6 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\ArticleResource;
 
 class ArticleController extends Controller
 {
@@ -37,16 +36,16 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::with('user', 'categories')->latest()->get();
 
-        return ArticleResource::collection(Article::all());
+        return view('articles.index', compact('articles'));
     }
 
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::with('user', 'categories', 'tags', 'comments')->findOrFail($id);
 
-        return new ArticleResource(Article::findOrFail($id));
+        return view('articles.show', compact('article'));
     }
 
     public function edit($id)
