@@ -15,7 +15,7 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev
 
 # --- Image finale ---
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 RUN apk add --no-cache nginx supervisor bash \
       icu-dev postgresql-dev oniguruma-dev libzip-dev \
  && docker-php-ext-install pdo pdo_pgsql mbstring bcmath intl zip opcache
