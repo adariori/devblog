@@ -23,7 +23,7 @@ class CommentController extends Controller
     {
         $comment = Comment::findOrFail($id);
 
-        Gate::authorize('delete', $comment); // 🚫 403 si pas modérateur
+        Gate::authorize('delete', $comment); // 403 si l'utilisateur n'est pas modérateur
 
         $comment->delete();
 

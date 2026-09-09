@@ -59,7 +59,7 @@
         <div class="code">@yield('code')<span>.</span></div>
         <h1>@yield('title')</h1>
         <p>@yield('message')</p>
-        <a class="home" href="{{ url('/articles') }}">← Retour aux articles</a>
+        <a class="home" href="{{ url('/articles') }}">Retour aux articles</a>
     </div>
 </body>
 

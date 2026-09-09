@@ -72,7 +72,7 @@
                     <span class="font-normal text-zinc-400">— laisser vide pour conserver l'actuelle</span>
                 </label>
                 @if ($article->cover_path)
-                    <img src="{{ Storage::url($article->cover_path) }}" alt=""
+                    <img src="{{ Storage::disk('public')->url($article->cover_path) }}" alt=""
                          class="mt-2 aspect-[16/9] w-full max-w-xs rounded-lg object-cover ring-1 ring-zinc-200">
                 @endif
                 <input type="file" name="cover" id="cover" accept="image/*"

@@ -16,7 +16,7 @@
             <a href="{{ route('categories.edit', $category->id) }}"
                class="flex items-center justify-between border-b border-zinc-200 py-4 transition hover:text-orange-700">
                 <span class="font-serif text-lg font-medium text-zinc-900">{{ $category->nom }}</span>
-                <span class="text-xs font-semibold uppercase tracking-widest text-zinc-400">Modifier →</span>
+                <span class="text-xs font-semibold uppercase tracking-widest text-zinc-400">Modifier</span>
             </a>
         @empty
             <p class="py-16 text-center font-serif text-xl text-zinc-900">Aucune catégorie pour le moment.</p>

@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-3xl">
         <a href="{{ route('auteurs.index') }}"
            class="text-xs font-semibold uppercase tracking-widest text-zinc-500 transition hover:text-zinc-900">
-            ← Tous les auteurs
+            Tous les auteurs
         </a>
 
         <div class="mt-8 flex items-center gap-5 border-b-2 border-zinc-900 pb-6">

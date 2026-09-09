@@ -2,7 +2,7 @@
 
 Application de blog développée avec **Laravel 13**, réalisée au fil d'un cours (Modules 1 à 14) : du CRUD de base jusqu'à l'API REST sécurisée, les tests automatisés et le déploiement continu.
 
-🔗 **Démo en ligne** : https://devblog-fob3.onrender.com
+**Démo en ligne** : https://devblog-fob3.onrender.com
 
 ---
 

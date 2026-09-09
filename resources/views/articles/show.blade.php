@@ -4,7 +4,7 @@
 
         <a href="{{ route('articles.index') }}"
            class="text-xs font-semibold uppercase tracking-widest text-zinc-500 transition hover:text-zinc-900">
-            ← Retour aux articles
+            Retour aux articles
         </a>
 
         @if ($article->categories->isNotEmpty())
@@ -31,7 +31,7 @@
         </div>
 
         @if ($article->cover_path)
-            <img src="{{ Storage::url($article->cover_path) }}" alt="Couverture"
+            <img src="{{ Storage::disk('public')->url($article->cover_path) }}" alt="Couverture"
                  class="mt-8 aspect-[16/9] w-full rounded-2xl object-cover ring-1 ring-zinc-200">
         @endif
 
@@ -49,7 +49,7 @@
             <div class="mt-8 flex flex-wrap items-center gap-3 border-t border-zinc-200 pt-6">
                 <a href="{{ route('articles.edit', $article->id) }}"
                    class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50">
-                    ✏️ Modifier
+                    Modifier
                 </a>
                 <form action="{{ route('articles.destroy', $article->id) }}" method="POST"
                       onsubmit="return confirm('Supprimer cet article ?')">
@@ -57,7 +57,7 @@
                     @method('DELETE')
                     <button type="submit"
                             class="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50">
-                        🗑️ Supprimer
+                        Supprimer
                     </button>
                 </form>
             </div>
@@ -76,7 +76,7 @@
                 <div class="rounded-xl border border-zinc-200 bg-white p-4">
                     <p class="text-zinc-700">{{ $comment->contenu }}</p>
                     <div class="mt-3 flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">— {{ $comment->auteur }}</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">{{ $comment->auteur }}</span>
                         @can('delete', $comment)
                             <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
                                   onsubmit="return confirm('Supprimer ce commentaire ?')">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
             @empty
-                <p class="text-zinc-500">Aucun commentaire pour l'instant. Soyez le premier !</p>
+                <p class="text-zinc-500">Aucun commentaire pour l'instant.</p>
             @endforelse
         </div>
 

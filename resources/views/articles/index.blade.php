@@ -12,7 +12,7 @@
             <article class="group flex flex-col gap-5 py-8 first:pt-0 sm:flex-row">
                 @if ($article->cover_path)
                     <a href="{{ route('articles.show', $article->id) }}" class="block shrink-0 sm:w-56">
-                        <img src="{{ Storage::url($article->cover_path) }}" alt=""
+                        <img src="{{ Storage::disk('public')->url($article->cover_path) }}" alt=""
                              class="aspect-[16/10] w-full rounded-xl object-cover ring-1 ring-zinc-200">
                     </a>
                 @endif
