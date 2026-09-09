@@ -17,8 +17,15 @@ jobs:
           extensions: pdo, sqlite, pdo_sqlite, mbstring, bcmath, intl, zip
           coverage: none
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Build assets (manifest Vite pour les vues Breeze)
+        run: npm ci && npm run build
 
       - name: Prepare environment
         run: |
