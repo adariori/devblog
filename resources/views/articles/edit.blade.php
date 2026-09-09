@@ -1,5 +1,8 @@
 <x-layout titre="Modifier l'article">
 
+    @php($catIds = collect(old('categories', $article->categories->pluck('id')->all()))->map(fn ($i) => (int) $i)->all())
+    @php($tagIds = collect(old('tags', $article->tags->pluck('id')->all()))->map(fn ($i) => (int) $i)->all())
+
     <div class="mx-auto max-w-2xl">
         <header class="border-b-2 border-zinc-900 pb-6">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-orange-600">Édition</p>
@@ -24,6 +27,43 @@
                 <textarea name="contenu" id="contenu" rows="12"
                           class="mt-1 block w-full rounded-lg border-zinc-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">{{ old('contenu', $article->contenu) }}</textarea>
                 @error('contenu') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <span class="block text-sm font-medium text-zinc-700">Catégories</span>
+                <div class="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+                    @forelse ($categories as $categorie)
+                        <label class="inline-flex cursor-pointer items-center gap-2 text-sm text-zinc-700">
+                            <input type="checkbox" name="categories[]" value="{{ $categorie->id }}"
+                                   @checked(in_array($categorie->id, $catIds))
+                                   class="rounded border-zinc-300 text-orange-600 focus:ring-orange-500">
+                            {{ $categorie->nom }}
+                        </label>
+                    @empty
+                        <p class="text-sm text-zinc-400">
+                            Aucune catégorie —
+                            <a href="{{ route('categories.create') }}" class="text-orange-600 hover:underline">en créer une</a>.
+                        </p>
+                    @endforelse
+                </div>
+                @error('categories') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <span class="block text-sm font-medium text-zinc-700">Tags</span>
+                <div class="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+                    @forelse ($tags as $tag)
+                        <label class="inline-flex cursor-pointer items-center gap-2 text-sm text-zinc-700">
+                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                                   @checked(in_array($tag->id, $tagIds))
+                                   class="rounded border-zinc-300 text-orange-600 focus:ring-orange-500">
+                            #{{ $tag->nom }}
+                        </label>
+                    @empty
+                        <p class="text-sm text-zinc-400">Aucun tag disponible.</p>
+                    @endforelse
+                </div>
+                @error('tags') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div>

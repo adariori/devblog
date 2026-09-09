@@ -1,31 +1,30 @@
 <?php
 
-/**
- * @author    ARIORI OLOROUNKO Adéliyi Odjouola Moshood
- * @github    https://github.com/adariori
- * @web       https://portefolio-nine-iota.vercel.app/
- * @contact   adariori3@gmail.com
- * @location  Cotonou, Benin
- *
- * @project   DevBlog
- * @version   1.0.0
- * @year      2026
- * @stack     Laravel 13 · PHP 8.4 · PostgreSQL · Docker · CI/CD GitHub Actions
- *
- * @license   Creative Commons BY-NC-ND 4.0
- *            © 2026 ARIORI OLOROUNKO Adéliyi Odjouola Moshood
- *            Consultation autorisée à titre de référence uniquement.
- *            Toute réutilisation commerciale ou modification est interdite.
+/*
+ | Author    : ARIORI OLOROUNKO Adéliyi Odjouola Moshood
+ | GitHub    : https://github.com/adariori
+ | Web       : https://portefolio-nine-iota.vercel.app/
+ | Contact   : adariori3@gmail.com
+ | Location  : Cotonou, Benin
+ |
+ | Project   : DevBlog
+ | Version   : 1.0.0
+ | Year      : 2026
+ | Stack     : Laravel 13 · PHP 8.4 · PostgreSQL · Docker · CI/CD GitHub Actions
+ |
+ | License   : Creative Commons BY-NC-ND 4.0
+ |             © 2026 ARIORI OLOROUNKO Adéliyi Odjouola Moshood
+ |             Consultation autorisée à titre de référence uniquement.
+ |             Toute réutilisation commerciale ou modification est interdite.
  */
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuteurController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect()->route('articles.index'));
 
@@ -39,8 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
-
+require __DIR__.'/auth.php';
 
 // Visibles par tout le monde : voir la liste
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
@@ -63,14 +61,13 @@ Route::get('/auteurs', [AuteurController::class, 'index'])->name('auteurs.index'
 Route::get('/auteurs/{id}', [AuteurController::class, 'show'])->name('auteurs.show');
 
 // Catégories
-Route::resource('categories', CategoryController::class)->except(['show']);
+Route::resource('categories', CategoryController::class)->except(['show'])->middleware('auth');
 
 // Commentaires
 Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 Route::get('/admin/tableau-de-bord', [AdminController::class, 'index'])
     ->middleware('admin');
-
 
 Route::delete('/comments/{id}', [CommentController::class, 'destroy'])
     ->middleware('auth')

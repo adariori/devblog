@@ -6,21 +6,25 @@
     </header>
 
     <div class="mt-10 grid gap-4 sm:grid-cols-2">
-        @forelse ($auteurs as $id => $item)
-            <a href="{{ route('auteurs.show', $id) }}"
-               class="group flex items-start gap-4 rounded-xl border border-zinc-200 bg-white p-5 transition hover:border-orange-300 hover:shadow-sm">
+        @forelse ($auteurs as $auteur)
+            <a href="{{ route('auteurs.show', $auteur->id) }}"
+               class="group flex items-center gap-4 rounded-xl border border-zinc-200 bg-white p-5 transition hover:border-orange-300 hover:shadow-sm">
                 <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-orange-50 font-serif text-lg font-semibold text-orange-700 ring-1 ring-inset ring-orange-600/20">
-                    {{ \Illuminate\Support\Str::of($item['auteur'])->substr(0, 1)->upper() }}
+                    {{ \Illuminate\Support\Str::of($auteur->name)->substr(0, 1)->upper() }}
                 </span>
                 <div class="min-w-0">
                     <p class="font-serif text-lg font-semibold text-zinc-900 transition group-hover:text-orange-700">
-                        {{ $item['auteur'] }}
+                        {{ $auteur->name }}
                     </p>
-                    <p class="mt-1 text-sm text-zinc-600">{{ $item['bio'] }}</p>
+                    <p class="mt-0.5 text-sm text-zinc-500">
+                        {{ $auteur->articles_count }} {{ \Illuminate\Support\Str::plural('article', $auteur->articles_count) }}
+                    </p>
                 </div>
             </a>
         @empty
-            <p class="py-16 text-center font-serif text-xl text-zinc-900 sm:col-span-2">Aucun auteur trouvé.</p>
+            <p class="py-16 text-center font-serif text-xl text-zinc-900 sm:col-span-2">
+                Personne n'a encore publié d'article.
+            </p>
         @endforelse
     </div>
 

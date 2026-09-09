@@ -38,8 +38,7 @@ jobs:
           DB_DATABASE: ':memory:'
         run: php artisan test
 
-      - name: Code style (Pint) — informatif
-        continue-on-error: true
+      - name: Code style (Pint)
         run: vendor/bin/pint --test
 
   deploy:

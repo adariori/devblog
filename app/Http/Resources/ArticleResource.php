@@ -17,7 +17,7 @@ class ArticleResource extends JsonResource
         return [
             'id' => $this->id,
             'titre' => $this->titre,
-            'extrait' => substr($this->contenu, 0, 100) . '...',
+            'extrait' => substr($this->contenu, 0, 100).'...',
             'contenu' => $this->contenu,
             'auteur' => $this->user->name,
             'publie_le' => $this->created_at->format('d/m/Y'),

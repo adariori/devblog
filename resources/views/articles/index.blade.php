@@ -58,4 +58,10 @@
         @endforelse
     </div>
 
+    @if ($articles->hasPages())
+        <div class="mt-10">
+            {{ $articles->links() }}
+        </div>
+    @endif
+
 </x-layout>

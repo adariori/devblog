@@ -2,32 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class AuteurController extends Controller
 {
-    //
-    private array $auteurs = [
-        1 => ['auteur' => 'A', 'bio' => 'B'],
-        2 => ['auteur' => 'C', 'bio' => 'D'],
-        3 => ['auteur' => 'E', 'bio' => 'F'],
-    ];
-
+    /**
+     * Liste des utilisateurs qui ont publié au moins un article.
+     */
     public function index()
     {
-        $auteurs = $this->auteurs;
+        $auteurs = User::has('articles')
+            ->withCount('articles')
+            ->orderBy('name')
+            ->get();
 
         return view('auteurs.index', compact('auteurs'));
     }
 
+    /**
+     * Un auteur et ses articles.
+     */
     public function show($id)
     {
-        if (!isset($this->auteurs[$id])) {
-            abort(404);
-        }
+        $auteur = User::withCount('articles')->findOrFail($id);
+        $articles = $auteur->articles()->with('categories')->latest()->get();
 
-        $auteur = $this->auteurs[$id];
-
-        return view('auteurs.show', compact('auteur'));
+        return view('auteurs.show', compact('auteur', 'articles'));
     }
 }

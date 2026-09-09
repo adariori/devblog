@@ -23,7 +23,8 @@
 
         <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-zinc-500">
             @if ($article->user)
-                <span class="font-medium text-zinc-700">{{ $article->user->name }}</span>
+                <a href="{{ route('auteurs.show', $article->user->id) }}"
+                   class="font-medium text-zinc-700 transition hover:text-orange-700">{{ $article->user->name }}</a>
                 <span class="text-zinc-300">/</span>
             @endif
             <span>{{ $article->created_at?->format('d/m/Y') }}</span>

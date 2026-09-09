@@ -22,10 +22,10 @@
 
             <nav class="flex items-center gap-5 text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 <a href="{{ route('articles.index') }}" class="transition hover:text-zinc-900">Articles</a>
-                <a href="{{ route('categories.index') }}" class="hidden transition hover:text-zinc-900 sm:inline">Catégories</a>
                 <a href="{{ route('auteurs.index') }}" class="hidden transition hover:text-zinc-900 sm:inline">Auteurs</a>
 
                 @auth
+                    <a href="{{ route('categories.index') }}" class="hidden transition hover:text-zinc-900 sm:inline">Catégories</a>
                     <a href="{{ route('dashboard') }}" class="hidden transition hover:text-zinc-900 sm:inline">Mon espace</a>
                     <a href="{{ route('articles.create') }}"
                        class="inline-flex items-center gap-1.5 rounded-lg bg-orange-600 px-3 py-1.5 text-white shadow-sm transition hover:bg-orange-700">
