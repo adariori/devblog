@@ -2,7 +2,7 @@
 
 Application de blog développée avec **Laravel 13**, réalisée au fil d'un cours (Modules 1 à 14) : du CRUD de base jusqu'à l'API REST sécurisée, les tests automatisés et le déploiement continu.
 
-🔗 **Démo en ligne** : https://devblog-xxxx.onrender.com  _(remplacer par l'URL Render réelle)_
+🔗 **Démo en ligne** : https://devblog-fob3.onrender.com
 
 ---
 
@@ -115,12 +115,12 @@ Exemple :
 
 ```bash
 # Obtenir un jeton
-curl -X POST https://devblog-xxxx.onrender.com/api/login \
+curl -X POST https://devblog-fob3.onrender.com/api/login \
   -H "Accept: application/json" \
   -d "email=user@example.com&password=secret"
 
 # Créer un article
-curl -X POST https://devblog-xxxx.onrender.com/api/articles \
+curl -X POST https://devblog-fob3.onrender.com/api/articles \
   -H "Accept: application/json" \
   -H "Authorization: Bearer 1|xxxxxxxx" \
   -d "titre=Bonjour API&contenu=Premier article via l'API"
