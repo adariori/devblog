@@ -15,9 +15,11 @@ class UpdateArticleRequest extends FormRequest
     // Les règles de validation
     public function rules(): array
     {
+        // "sometimes" : permet une mise à jour partielle (utile pour l'API).
+        // Le formulaire web envoie toujours les deux champs, donc rien ne change côté web.
         return [
-            'titre' => 'required|min:3|max:255',
-            'contenu' => 'required',
+            'titre' => 'sometimes|required|min:3|max:255',
+            'contenu' => 'sometimes|required',
             'cover' => 'nullable|image|max:2048',
         ];
     }

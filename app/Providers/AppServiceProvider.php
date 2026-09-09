@@ -2,11 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
-
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,8 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('admin', function (User $user) {
-            return $user->email === 'admin@devblog.test';
-        });
+        // Derrière le proxy TLS de Render, forcer les URL générées en https
+        // (sinon @vite sort des liens http:// bloqués en "mixed content").
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

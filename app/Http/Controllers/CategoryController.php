@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('nom')->get();
+
         return view('categories.index', compact('categories'));
     }
 
@@ -18,34 +20,31 @@ class CategoryController extends Controller
         return view('categories.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $data = $request->validate([
-            'nom' => 'required|min:2|max:50|unique:categories,nom',
-        ]);
-        Category::create($data);
+        Category::create($request->validated());
+
         return redirect()->route('categories.index');
     }
 
     public function edit($id)
     {
         $category = Category::findOrFail($id);
+
         return view('categories.edit', compact('category'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        $data = $request->validate([
-            'nom' => 'required|min:2|max:50',
-        ]);
-        $category = Category::findOrFail($id);
-        $category->update($data);
+        Category::findOrFail($id)->update($request->validated());
+
         return redirect()->route('categories.index');
     }
 
     public function destroy($id)
     {
         Category::findOrFail($id)->delete();
+
         return redirect()->route('categories.index');
     }
 }

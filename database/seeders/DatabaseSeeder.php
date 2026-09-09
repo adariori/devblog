@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
-use App\Models\User;
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Tag;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,16 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        \App\Models\Article::factory()->count(30)->create();
-
+        $categories = Category::factory()->count(6)->create();
         $tags = Tag::factory()->count(8)->create();
 
-        Article::all()->each(function ($article) use ($tags) {
-            $article->tags()->attach(
-                $tags->random(rand(1, 3))->pluck('id')->toArray()
-            );
+        Article::factory()->count(30)->create()->each(function (Article $article) use ($categories, $tags) {
+            $article->categories()->attach($categories->random(rand(1, 3))->pluck('id')->all());
+            $article->tags()->attach($tags->random(rand(1, 3))->pluck('id')->all());
         });
     }
 }

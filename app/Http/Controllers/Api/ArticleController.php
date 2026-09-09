@@ -3,70 +3,69 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
-use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * GET /api/articles — liste publique.
      */
     public function index()
     {
-        return Article::all();
+        return ArticleResource::collection(
+            Article::with('user', 'categories')->latest()->get()
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
+     * POST /api/articles — protégé par auth:sanctum.
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        $donnees = $request->validate([
-            'titre' => 'required|min:3|max:255',
-            'contenu' => 'required',
-        ]);
+        // L'auteur est forcément le porteur du jeton.
+        $article = $request->user()->articles()->create(
+            $request->safe()->only(['titre', 'contenu'])
+        );
 
-        // La colonne user_id est obligatoire : on prend l'utilisateur du token
-        // s'il y en a un, sinon le premier utilisateur (route publique pour ce test).
-        $donnees['user_id'] = $request->user()?->id ?? User::first()?->id;
-
-        $article = Article::create($donnees);
-
-        return response()->json($article, 201);
+        return (new ArticleResource($article))->response()->setStatusCode(201);
     }
 
     /**
-     * Display the specified resource.
+     * GET /api/articles/{id} — détail public.
      */
     public function show(string $id)
     {
-        return Article::findOrFail($id);
+        return new ArticleResource(
+            Article::with('user', 'categories', 'tags')->findOrFail($id)
+        );
     }
 
     /**
-     * Update the specified resource in storage.
+     * PUT /api/articles/{id} — protégé + réservé au propriétaire.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateArticleRequest $request, string $id)
     {
         $article = Article::findOrFail($id);
+        Gate::authorize('update', $article);
 
-        $donnees = $request->validate([
-            'titre' => 'sometimes|required|min:3|max:255',
-            'contenu' => 'sometimes|required',
-        ]);
+        $article->update($request->safe()->only(['titre', 'contenu']));
 
-        $article->update($donnees);
-
-        return response()->json($article);
+        return new ArticleResource($article);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * DELETE /api/articles/{id} — protégé + réservé au propriétaire.
      */
     public function destroy(string $id)
     {
-        Article::findOrFail($id)->delete();
+        $article = Article::findOrFail($id);
+        Gate::authorize('delete', $article);
+
+        $article->delete();
 
         return response()->json(null, 204);
     }

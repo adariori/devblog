@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCommentRequest;
 use App\Models\Article;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, $articleId)
+    public function store(StoreCommentRequest $request, $articleId)
     {
-        $donneesValidees = $request->validate([
-            'auteur' => 'required|max:100',
-            'contenu' => 'required|min:2',
-        ]);
-
         $article = Article::findOrFail($articleId);
 
         // On crée le commentaire DIRECTEMENT via la relation
-        $article->comments()->create($donneesValidees);
+        $article->comments()->create($request->validated());
 
         return redirect()->route('articles.show', $article->id);
     }
