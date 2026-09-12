@@ -12,10 +12,8 @@
  | Year      : 2026
  | Stack     : Laravel 13 · PHP 8.4 · PostgreSQL · Docker · CI/CD GitHub Actions
  |
- | License   : Creative Commons BY-NC-ND 4.0
+ | License   : MIT
  |             © 2026 ARIORI OLOROUNKO Adéliyi Odjouola Moshood
- |             Consultation autorisée à titre de référence uniquement.
- |             Toute réutilisation commerciale ou modification est interdite.
  */
 
 use App\Http\Controllers\AdminController;

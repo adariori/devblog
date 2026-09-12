@@ -19,7 +19,7 @@
 | Année   | 2026                                                       |
 | Stack   | Laravel 13 · PHP 8.4 · PostgreSQL · Docker · CI/CD GitHub Actions |
 | Contexte| Portfolio personnel                                          |
-| Licence | Creative Commons BY-NC-ND 4.0 — voir [`LICENSE`](LICENSE)     |
+| Licence | MIT — voir [`LICENSE`](LICENSE)                              |
 
 ## Emplacement de la signature
 
